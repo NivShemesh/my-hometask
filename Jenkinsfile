@@ -1,39 +1,25 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
+
     stages {
-         stage('Clone repository') { 
-            steps { 
-                script{
-                checkout scm
-                }
-            }
-        }
-        
-        stage('Test'){
+        stage ('Clone from git') {
             steps {
-                 echo 'Testing...'
+                git 'https://github.com/NivShemesh/my-hometask.git'
             }
         }
-
-        stage('Build') { 
-            steps { 
-                script{
-                 app = docker.build("Devops-is-great")
-                }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
             }
         }
-
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
         stage('Deploy') {
             steps {
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com', 'git') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
-                    }
-                }
+                echo 'Deploying....'
             }
         }
     }
