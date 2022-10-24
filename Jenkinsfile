@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 echo 'Building...'
-                sh 'docker build -t devops-is-great:$BUILD_NUMBER'
+                sh 'docker build -t devops-is-great:latest .'
             }
         }
         stage('Deploy') {
