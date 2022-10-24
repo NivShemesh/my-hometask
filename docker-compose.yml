@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+#  git-server:
+#    container_name: git-server
+#    image: jkarlos/git-server-docker
+#    ports:
+#      - '2222:22'
+#    volumes:
+#      - ./git-server/keys:/git-server/keys
+#      - ./git-server/repos:/git-server/repos
+#  jenkins:
+          # image: jenkins/jenkins:lts
+    #privileged: true
+    #user: root
+    #ports:
+            # - 8080:8080
+        #- 50000:50000
+        #container_name: jenkins
+    #    volumes:
+            #- /jenkins_data:/var/jenkins_home
+        #    - /var/run/docker.sock:/var/run/docker.sock
+  jenkins:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - /jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  python_app:
+    container_name: python_app
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      #tty: true
