@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage ('Clone from git') {
+        stage ('SCM Checkout') {
             steps {
                 git 'https://github.com/NivShemesh/my-hometask.git'
             }
@@ -12,9 +12,10 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('Build') {
+        stage('Build docker image') {
             steps {
                 echo 'Building...'
+                sh 'docker build -t devops-is-great:$BUILD_NUMBER'
             }
         }
         stage('Deploy') {
